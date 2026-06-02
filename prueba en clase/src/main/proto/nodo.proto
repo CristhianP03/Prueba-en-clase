@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+option java_package = "gRPC";
+option java_multiple_files = true;
+
+service NodoService {
+  rpc Operar        (OperacionRequest)    returns (OperacionResponse);
+  rpc Heartbeat     (HeartbeatRequest)    returns (HeartbeatResponse);
+  rpc Eleccion      (EleccionRequest)     returns (EleccionResponse);
+  rpc Coordinador   (CoordinadorRequest)  returns (CoordinadorResponse);
+}
+
+message OperacionRequest {
+  string token       = 1;
+  string payload     = 2;
+  int64  lamportTime = 3;
+  int32  nodoId      = 4;
+}
+
+message OperacionResponse {
+  string resultado   = 1;
+  int64  lamportTime = 2;
+  int32  nodoId      = 3;
+  bool   exito       = 4;
+}
+
+message HeartbeatRequest {
+  int32 nodoId      = 1;
+  int64 lamportTime = 2;
+}
+
+message HeartbeatResponse {
+  int32 nodoId      = 1;
+  int64 lamportTime = 2;
+}
+
+message EleccionRequest {
+  int32 nodoIdEmisor = 1;
+  int64 lamportTime  = 2;
+}
+message EleccionResponse {
+  bool ok = 1;
+}
+
+message CoordinadorRequest {
+  int32 nodoIdCoordinador = 1;
+  int64 lamportTime       = 2;
+}
+message CoordinadorResponse {
+  bool recibido = 1;
+}
